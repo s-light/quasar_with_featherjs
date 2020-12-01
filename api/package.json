@@ -5,5 +5,10 @@
   "main": "index.js",
   "repository": "https://github.com/s-light/quasar_with_featherjs",
   "author": "Stefan Krüger (s-light)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@feathersjs/express": "^4.5.10",
+    "@feathersjs/feathers": "^4.5.10",
+    "@feathersjs/socketio": "^4.5.10"
+  }
 }
