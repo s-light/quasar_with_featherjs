@@ -1,0 +1,9 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "description": "featherjs playground",
+  "main": "index.js",
+  "repository": "https://github.com/s-light/quasar_with_featherjs",
+  "author": "Stefan Krüger (s-light)",
+  "license": "MIT"
+}
