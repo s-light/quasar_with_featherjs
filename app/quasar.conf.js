@@ -1,7 +1,7 @@
 /*
- * This file runs in a Node context (it's NOT transpiled by Babel), so use only
- * the ES6 features that are supported by your Node version. https://node.green/
- */
+* This file runs in a Node context (it's NOT transpiled by Babel), so use only
+* the ES6 features that are supported by your Node version. https://node.green/
+*/
 
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
@@ -74,9 +74,18 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      https: false,
+      open: true, // opens browser window automatically
       port: 8080,
-      open: true // opens browser window automatically
+      https: false,
+      // https://webpack.js.org/configuration/dev-server/#devserverproxy
+      proxy: {
+        '/api': {
+          target: 'https://localhost:3030',
+          pathRewrite: { '^/api': '' },
+          secure: false,
+          changeOrigin: true
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
