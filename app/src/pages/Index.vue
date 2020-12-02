@@ -18,7 +18,7 @@ messages.on('created', user => {
 export default {
     data () {
         return {
-            test_message: 'Hello World'
+            messages: ['Hello World']
         }
     },
     name: 'PageIndex'
