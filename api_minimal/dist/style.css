@@ -1,0 +1,79 @@
+body {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-size: cover;
+    font-size: 20px;
+    /* font-family: Overlock; */
+    font-family: "Architects Daughter";
+    /* night blue */
+    color:  rgb(170,190,255);
+    text-shadow:
+        0 0 2px rgb(0, 0, 0),
+        0 0 3px rgb(0, 0, 0),
+        0 0 6px rgb(0, 0, 0);
+    background-color: rgb(0, 0, 20);
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 70, 0.9) 100%
+        ),
+        radial-gradient(
+            40vw at 50% 100%,
+            rgba(200, 0, 30, 0.9) 0%,
+            rgba(200, 0, 30, 0.2) 90%,
+            rgba(200, 0, 30, 0) 100%
+        ),
+        radial-gradient(
+            0.9vh at 60% 12%,
+            rgba(255, 230, 200, 0.4) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            0.7vh at 72% 3%,
+            rgba(255, 230, 150, 0.6) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            0.8vh at 80% 20%,
+            rgba(255, 230, 200, 0.8) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            0.8vh at 82% 30%,
+            rgba(255, 200, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            0.8vh at 89% 20%,
+            rgba(255, 230, 150, 0.4) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            0.5vh at 75% 40%,
+            rgba(255, 230, 200, 0.4) 0%,
+            rgba(0, 0, 0, 0) 100%
+        ),
+        radial-gradient(
+            12em at 90% 9%,
+            rgba(250, 180, 0, 1) 0%,
+            rgba(250, 180, 0, 1) 5%,
+            rgba(250, 150, 0, 1) 15%,
+            rgba(0, 0, 0, 0) 100%
+        )
+    ;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+}
