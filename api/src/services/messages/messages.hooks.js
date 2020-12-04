@@ -1,12 +1,15 @@
 
+const processMessage = require('../../hooks/process-message');
+
+const setTimestamp = require('../../hooks/set-timestamp');
 
 module.exports = {
     before: {
         all: [],
         find: [],
         get: [],
-        create: [],
-        update: [],
+        create: [processMessage(), setTimestamp('createdAt')],
+        update: [setTimestamp('updatedAt')],
         patch: [],
         remove: []
     },

@@ -1,7 +1,17 @@
 <template>
     <q-page class="fit column no-wrap justify-center items-center content-center">
+        <section class="q-pa-md row justify-center">
+            <div style="width: 100%; max-width: 400px">
+                <q-chat-message
+                    v-for="msg in messages"
+                    :key="msg.id"
+                    :text="[msg.text]"
+                    :stamp="msg.createdAt | prettyDateTime"
+                />
+            </div>
+        </section>
         <section>
-            <pre>{{ messages | pretty }}</pre>
+            <pre style="font-size:0.5em">{{ messages | pretty }}</pre>
         </section>
         <section>
             <q-input
@@ -35,13 +45,17 @@
 </template>
 
 <script>
+import { date } from 'quasar'
 import api from '../api'
 
 export default {
     data () {
         return {
             messagaeToSend: '',
-            messages: ['Hello World']
+            messages: [{
+                text: 'Hello World',
+                createdAt: '20200101'
+            }]
         }
     },
     computed: {
@@ -78,10 +92,16 @@ export default {
         })
         // init from server
         // this.messages = await app.service('messages').find()
-        messagesService.find().then(function (value) {
-            console.log('messageService.find then', value)
-            // this.messages = await app.service('messages').find()
-        }).catch(function (error) {
+        messagesService.find({
+            query: {
+                $sort: { createdAt: -1 },
+                $limit: 25
+            }
+        }).then((respons) => {
+            // messagesService.find().then(function (respons) {
+            console.log('messageService.find then', respons)
+            this.messages = respons.data
+        }).catch((error) => {
             console.log('messageService.find catch', error)
         })
         // console.log('messageService.find', messagesService.find())
@@ -101,6 +121,9 @@ export default {
                 // console.log(value, e)
             }
             return JSON.stringify(valueJson, null, 4)
+        },
+        prettyDateTime: function (value) {
+            return date.formatDate(value, 'HH:mm DD.MM.YYYY')
         }
     },
     name: 'PageIndex'
