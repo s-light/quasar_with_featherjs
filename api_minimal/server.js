@@ -11,7 +11,7 @@ class MessageService {
 
     async find () {
         // Just return all our messages
-        console.log('find all messages.');
+        console.log('find all messages', this.messages);
         return this.messages;
     }
 

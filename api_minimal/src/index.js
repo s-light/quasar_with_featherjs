@@ -11,6 +11,8 @@ const app = feathers();
 // Register socket.io to talk to our server
 app.configure(socketio(socket));
 
+
+
 // Form submission handler that sends a new message
 async function sendMessage (event) {
     console.log('sendMessage');
