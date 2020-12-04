@@ -37,17 +37,17 @@ const linksData = [
         title: 'Welcome',
         icon: 'home',
         link: '/'
+    },
+    {
+        title: 'Vanilla',
+        icon: 'aspect_ratio',
+        link: 'simple'
+    },
+    {
+        title: 'Vuex',
+        icon: 'code',
+        link: 'extended'
     }
-    // {
-    //     title: 'Test1',
-    //     icon: 'aspect_ratio',
-    //     link: 'test1'
-    // },
-    // {
-    //     title: 'Test2',
-    //     icon: 'code',
-    //     link: 'test2'
-    // }
 ]
 
 export default {
