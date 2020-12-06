@@ -5,6 +5,12 @@ import { FeathersVuex } from '../feathers-client'
 // import example from './module-example'
 import appconfig from './appconfig'
 
+// this will be automagically imported
+// import messagesService from './services/messages'
+
+Vue.use(Vuex)
+Vue.use(FeathersVuex)
+
 // automagically import all ./service/* files
 const requireModule = require.context(
     // The path where the service modules live
@@ -25,9 +31,6 @@ const servicePlugins = requireModule
 // Use a new variable and export values to change default behavior.
 let store = null
 
-Vue.use(Vuex)
-Vue.use(FeathersVuex)
-
 /*
 * If not building with SSR mode, you can
 * directly export the Store instantiation;
@@ -44,6 +47,7 @@ export default function (/* { ssrContext } */) {
             appconfig
         },
         plugins: [...servicePlugins],
+        // plugins: [messagesService],
 
         // enable strict mode (adds overhead!)
         // for dev mode and --debug builds only

@@ -11,3 +11,13 @@ process.on('unhandledRejection', (reason, p) =>
 server.on('listening', () =>
     logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
 );
+
+// create special start message
+app.service('messages').create({
+    text: 'server started at ' + new Date().toISOString()
+});
+app.service('my-object-list').create({
+    name: 'server startup',
+    value: new Date().toISOString(),
+    description: 'server started at value..'
+});

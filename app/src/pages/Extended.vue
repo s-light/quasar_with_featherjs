@@ -16,17 +16,24 @@
             </div>
         </section>
         <section
-        style="
+            style="
             min-width: 4em;
             min-height: 2em;
             background-color: hsla(230.1, 100%, 50%, 0.05);
             border-radius: 0.5em;
             box-shadow: 0 0 20px hsla(200, 100%, 50%, 0.2);
             margin: 1em;
-        "
+            "
         >
-            <pre
-            >{{ messages | pretty }}</pre>
+            <pre>{{ messages | pretty }}</pre>
+        </section>
+        <section>
+            <ul>
+                <li v-for="entry in myObjectList" :key="entry._id">
+                    {{ entry.name }}: {{ entry.value }} <br>
+                    {{ entry.description }}
+                </li>
+            </ul>
         </section>
         <section>
             <q-input
@@ -35,34 +42,35 @@
             v-model="messagaeToSend"
             @keyup.enter="messageSend()"
             >
-            <template v-slot:append>
-                <q-icon
-                :style="{opacity: (messagaeToSend !== '' ? 'inherit' : '0.1')}"
-                name="close"
-                @click="messagaeToSend = ''"
-                class="cursor-pointer"
-                />
-            </template>
-            <template v-slot:after>
-                <q-btn
-                round
-                v-ripple
-                dense
-                flat
-                icon="send"
-                :disable="!connected"
-                @click="messageSend()"
-                />
-            </template>
-        </q-input>
-    </section>
-</q-page>
+                <template v-slot:append>
+                    <q-icon
+                    :style="{opacity: (messagaeToSend !== '' ? 'inherit' : '0.1')}"
+                    name="close"
+                    @click="messagaeToSend = ''"
+                    class="cursor-pointer"
+                    />
+                </template>
+                <template v-slot:after>
+                    <q-btn
+                    round
+                    v-ripple
+                    dense
+                    flat
+                    icon="send"
+                    :disable="!connected"
+                    @click="messageSend()"
+                    />
+                </template>
+            </q-input>
+        </section>
+    </q-page>
 </template>
 
 <script>
 import { date } from 'quasar'
-import { useFind } from 'feathers-vuex'
-import { computed } from '@vue/composition-api'
+// import { useFind } from 'feathers-vuex'
+// import { computed } from '@vue/composition-api'
+import { makeFindMixin } from 'feathers-vuex'
 import { mapBind } from '../store/mapBind.js'
 
 export default {
@@ -75,17 +83,32 @@ export default {
             // }]
         }
     },
+    mixins: [
+        makeFindMixin({ service: 'messages' }),
+        makeFindMixin({ service: 'my-object-list' })
+    ],
     computed: {
         connected: function () {
-            return api.service('messages').connection.connected
+            console.log('computed: connected this', this)
+            // return api.service('messages').connection.connected
+            return true
         },
-        ...mapBind('appconfig', ['globalMessage', 'package_selected', 'package_options'])
+        ...mapBind('appconfig', ['globalMessage', 'package_selected', 'package_options']),
+        // ...mapBind('globalconfig', ['gInfo', 'weight_current'])
+        messagesParams () {
+            return { query: {} }
+        },
+        myObjectListParams () {
+            return { query: {} }
+        }
     },
     methods: {
         messageSend: function () {
             console.group('messageSend')
             console.log('TODO: implement sending with featers-vuex')
-            // console.log('messagaeToSend', this.messagaeToSend)
+            console.log('messagaeToSend', this.messagaeToSend)
+            console.log('messageSend this', this)
+            // this.$store
             // const serviceMessage = api.service('messages')
             // if (serviceMessage.connection.connected) {
             //     serviceMessage.create({
@@ -102,26 +125,25 @@ export default {
             console.groupEnd()
         }
     },
-    setup (props, context) {
-        const { Message } = context.root.$FeathersVuex.api
-        // const { $store } = context.root
-        // Messages
-        const messagesParams = computed(() => {
-            return {
-                query: {
-                    $sort: { createdAt: 1 },
-                    $limit: 25
-                }
-            }
-        })
-        const { items: messages } = useFind({
-            model: Message,
-            params: messagesParams
-        })
-        return {
-            messages
-        }
-    },
+    // setup (props, context) {
+    //     const { Message } = context.root.$FeathersVuex.api
+    //     // const { $store } = context.root
+    //     // Messages
+    //     const messagesParams = computed(() => {
+    //         return {
+    //             query: {
+    //                 $sort: { createdAt: 1 }
+    //             }
+    //         }
+    //     })
+    //     const { items: messages } = useFind({
+    //         model: Message,
+    //         params: messagesParams
+    //     })
+    //     return {
+    //         messages
+    //     }
+    // },
     filters: {
         pretty: function (value) {
             let valueJson = value
@@ -136,6 +158,6 @@ export default {
             return date.formatDate(value, 'HH:mm DD.MM.YYYY')
         }
     },
-    name: 'PageIndex'
+    name: 'PageExtended'
 }
 </script>

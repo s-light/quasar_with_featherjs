@@ -6,9 +6,9 @@ module.exports = function(app) {
 
     app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
-        console.log('incoming connection');
+        // console.log('incoming connection');
         app.channel('anonymous').join(connection);
-        console.log('joined anonymous');
+        console.log('incoming connection joined \'anonymous\'');
     });
 
     app.on('login', (authResult, { connection }) => {
@@ -47,10 +47,10 @@ module.exports = function(app) {
         // e.g. to publish all service events to all authenticated users use
         // return app.channel('authenticated');
 
-        console.log(`Publishing all events to all anonymous users.
-            See 'channels.js' and
-            https://docs.feathersjs.com/api/channels.html
-            for more information.`);
+        // console.log(`Publishing all events to all anonymous users.
+        //     See 'channels.js' and
+        //     https://docs.feathersjs.com/api/channels.html
+        //     for more information.`);
         return app.channel('anonymous');
     });
 
