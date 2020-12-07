@@ -23,6 +23,7 @@
             border-radius: 0.5em;
             box-shadow: 0 0 20px hsla(200, 100%, 50%, 0.2);
             margin: 1em;
+            font-size: 0.6em;
             "
         >
             <pre>{{ messages | pretty }}</pre>

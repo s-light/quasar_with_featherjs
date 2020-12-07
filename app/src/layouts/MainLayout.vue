@@ -13,7 +13,6 @@
             v-model="leftDrawerOpen"
             show-if-above
             bordered
-            content-class="bg-grey-1"
         >
             <q-list>
                 <EssentialLink
@@ -47,6 +46,11 @@ const linksData = [
         title: 'Vuex',
         icon: 'code',
         link: 'extended'
+    },
+    {
+        title: 'Settings',
+        icon: 'settings',
+        link: 'settings'
     }
 ]
 

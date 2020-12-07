@@ -13,11 +13,11 @@ server.on('listening', () =>
 );
 
 // create special start message
-app.service('messages').create({
-    text: 'server started at ' + new Date().toISOString()
-});
-app.service('my-object-list').create({
-    name: 'server startup',
-    value: new Date().toISOString(),
-    description: 'server started at value..'
-});
+// app.service('messages').create({
+//     text: 'server started at ' + new Date().toISOString()
+// });
+// app.service('global-config').create({
+//     name: 'serialDevice',
+//     value:'/dev/ttyUSB1',
+//     description: 'system path to serial device'
+// });

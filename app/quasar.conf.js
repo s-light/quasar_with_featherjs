@@ -19,7 +19,7 @@ module.exports = function (/* ctx */) {
         // --> boot files are part of "main.js"
         // https://quasar.dev/quasar-cli/boot-files
         boot: [
-
+            'axios'
         ],
 
         // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -30,7 +30,7 @@ module.exports = function (/* ctx */) {
         // https://github.com/quasarframework/quasar/tree/dev/extras
         extras: [
             // 'ionicons-v4',
-            // 'mdi-v5',
+            'mdi-v5',
             // 'fontawesome-v5',
             // 'eva-icons',
             // 'themify',
@@ -92,7 +92,13 @@ module.exports = function (/* ctx */) {
         framework: {
             iconSet: 'material-icons', // Quasar icon set
             lang: 'en-us', // Quasar language pack
-            config: {},
+            config: {
+                notify: {
+                    position: 'top'
+                },
+                // https://quasar.dev/quasar-plugins/dark#Through-quasar.conf.js
+                dark: 'auto' // or Boolean true/false
+            },
 
             // Possible values for "importStrategy":
             // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
@@ -107,7 +113,9 @@ module.exports = function (/* ctx */) {
             // directives: [],
 
             // Quasar plugins
-            plugins: []
+            plugins: [
+                'Notify'
+            ]
         },
 
         // animations: 'all', // --- includes all animations
@@ -129,7 +137,7 @@ module.exports = function (/* ctx */) {
                 description: 'playground with experiments for quasar with featherjs',
                 display: 'standalone',
                 orientation: 'portrait',
-                background_color: '#ffffff',
+                background_color: '#fff0e0',
                 theme_color: '#027be3',
                 icons: [
                     {
