@@ -2,7 +2,7 @@
     "host": "localhost",
     "port": 3030,
     "debug": true,
-    "public": "../../app/public/",
+    "public": "../../app/dist/spa/",
     "paginate": {
         "default": 50,
         "max": 100
