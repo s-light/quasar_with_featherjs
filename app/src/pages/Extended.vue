@@ -5,6 +5,14 @@
             '{{ package_selected }}'<br>
             '{{ package_options }}'<br>
         </section>
+        <section>
+            <ul>
+                <li v-for="entry in myObjectList" :key="entry._id">
+                    {{ entry.name }}: {{ entry.value }} <br>
+                    {{ entry.description }}
+                </li>
+            </ul>
+        </section>
         <section class="q-pa-md row justify-center">
             <div style="width: 100%; max-width: 400px">
                 <q-chat-message
@@ -15,7 +23,7 @@
                 />
             </div>
         </section>
-        <section
+        <!-- <section
             style="
             min-width: 4em;
             min-height: 2em;
@@ -27,27 +35,19 @@
             "
         >
             <pre>{{ messages | pretty }}</pre>
-        </section>
-        <section>
-            <ul>
-                <li v-for="entry in myObjectList" :key="entry._id">
-                    {{ entry.name }}: {{ entry.value }} <br>
-                    {{ entry.description }}
-                </li>
-            </ul>
-        </section>
+        </section> -->
         <section>
             <q-input
             filled
             label="Send Message"
-            v-model="messagaeToSend"
+            v-model="messageText"
             @keyup.enter="messageSend()"
             >
                 <template v-slot:append>
                     <q-icon
-                    :style="{opacity: (messagaeToSend !== '' ? 'inherit' : '0.1')}"
+                    :style="{opacity: (messageText !== '' ? 'inherit' : '0.1')}"
                     name="close"
-                    @click="messagaeToSend = ''"
+                    @click="messageText = ''"
                     class="cursor-pointer"
                     />
                 </template>
@@ -69,15 +69,16 @@
 
 <script>
 import { date } from 'quasar'
-// import { useFind } from 'feathers-vuex'
+// import { ref } from '@vue/composition-api'
 // import { computed } from '@vue/composition-api'
 import { makeFindMixin } from 'feathers-vuex'
+// import { useFind } from 'feathers-vuex'
 import { mapBind } from '../store/mapBind.js'
 
 export default {
     data () {
         return {
-            messagaeToSend: ''
+            messageText: ''
             // messages: [{
             //     text: 'Hello World',
             //     createdAt: '20200101'
@@ -105,46 +106,24 @@ export default {
     },
     methods: {
         messageSend: function () {
-            console.group('messageSend')
-            console.log('TODO: implement sending with featers-vuex')
-            console.log('messagaeToSend', this.messagaeToSend)
-            console.log('messageSend this', this)
-            // this.$store
-            // const serviceMessage = api.service('messages')
-            // if (serviceMessage.connection.connected) {
-            //     serviceMessage.create({
-            //         text: this.messagaeToSend
-            //     })
-            //     this.messagaeToSend = ''
-            //     console.log('send.')
-            // } else {
-            //     console.log('connection offline.')
-            // }
-            // console.log('done.', api.service('messages'))
-            //
-            // $store.dispatch('messages')
-            console.groupEnd()
+            // console.group('messageSend')
+            // console.log('messageText', this.messageText)
+            // console.log('messageSend this', this)
+            // console.log('this.messages', this.messages)
+            // console.log('this.$store', this.$store)
+
+            // this does not work:
+            // the computed messages prooertie has no setter
+            // this.messages = this.messages.concat(this.messageText)
+
+            const { Message } = this.$FeathersVuex.api
+            const message = new Message({ text: this.messageText })
+            message.save()
+            // console.log('message', message)
+
+            // console.groupEnd()
         }
     },
-    // setup (props, context) {
-    //     const { Message } = context.root.$FeathersVuex.api
-    //     // const { $store } = context.root
-    //     // Messages
-    //     const messagesParams = computed(() => {
-    //         return {
-    //             query: {
-    //                 $sort: { createdAt: 1 }
-    //             }
-    //         }
-    //     })
-    //     const { items: messages } = useFind({
-    //         model: Message,
-    //         params: messagesParams
-    //     })
-    //     return {
-    //         messages
-    //     }
-    // },
     filters: {
         pretty: function (value) {
             let valueJson = value

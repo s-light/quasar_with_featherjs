@@ -6,15 +6,16 @@ import feathersClient, {
 import { date } from 'quasar'
 // import { format } from 'date-fns'
 
-class Messages extends BaseModel {
+class Message extends BaseModel {
     // constructor(data, options) {
     //     super(data, options)
     // }
 
     // Required for $FeathersVuex plugin to work after production transpile.
-    static modelName = 'Messages'
+    static modelName = 'Message'
 
     // Define default properties here
+    // static instanceDefaults(data, { store, models }) {
     static instanceDefaults () {
         return {
             text: 'Hello World'
@@ -36,7 +37,7 @@ class Messages extends BaseModel {
 }
 const servicePath = 'messages'
 const servicePlugin = makeServicePlugin({
-    Model: Messages,
+    Model: Message,
     service: feathersClient.service(servicePath),
     servicePath
 })

@@ -7,7 +7,7 @@
 module.exports = (options = {}) => {
     return async context => {
         const { data } = context;
-
+        console.log('process-message: data', data);
         // Throw an error if we didn't get a text
         if(!data.text) {
             throw new Error('A message must have a text');
