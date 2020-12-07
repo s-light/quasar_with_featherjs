@@ -4,16 +4,17 @@ const createModel = require('../../models/global-config.model');
 const hooks = require('./global-config.hooks');
 
 module.exports = function (app) {
-  const options = {
-    Model: createModel(app),
-    paginate: app.get('paginate')
-  };
+    const options = {
+        Model: createModel(app),
+        paginate: app.get('paginate'),
+        id: 'name'
+    };
 
-  // Initialize our service with any options it requires
-  app.use('/global-config', new GlobalConfig(options, app));
+    // Initialize our service with any options it requires
+    app.use('/global-config', new GlobalConfig(options, app));
 
-  // Get our initialized service so that we can register hooks
-  const service = app.service('global-config');
+    // Get our initialized service so that we can register hooks
+    const service = app.service('global-config');
 
-  service.hooks(hooks);
+    service.hooks(hooks);
 };

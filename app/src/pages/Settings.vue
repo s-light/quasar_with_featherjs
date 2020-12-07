@@ -38,8 +38,39 @@
         <section>
             <q-btn
                 v-ripple
+                label="load from server"
                 icon="sync"
                 @click="globalConfigLoadFromServer()"
+            />
+            <q-btn
+                v-ripple
+                label="testDev Night"
+                icon="sync"
+                @click="testDev('Night')"
+            />
+            <q-btn
+                v-ripple
+                label="saveGC 'pos':'99'"
+                icon="sync"
+                @click="saveGC('pos', '99')"
+            />
+            <q-btn
+                v-ripple
+                label="saveGC 'pos':'10'"
+                icon="sync"
+                @click="saveGC('pos', '10')"
+            />
+            <q-btn
+                v-ripple
+                label="saveGC 'rot':'0°'"
+                icon="sync"
+                @click="saveGC('rot', '0°')"
+            />
+            <q-btn
+                v-ripple
+                label="saveGC 'rot':'75°'"
+                icon="sync"
+                @click="saveGC('rot', '75°')"
             />
         </section>
         <section>
@@ -62,8 +93,11 @@
 </template>
 
 <script>
-// import { useFind, useGet } from 'feathers-vuex'
-import { useGet, makeFindMixin } from 'feathers-vuex'
+import {
+    // useFind,
+    useGet,
+    makeFindMixin
+} from 'feathers-vuex'
 
 export default {
     data () {
@@ -82,24 +116,53 @@ export default {
             get () {
                 // return this.$store.state.appconfig.globalMessage
                 // console.log(this)
-                return this.serialDeviceInt
+                // const modelClassName = 'GlobalConfig'
+                // const configName = 'serialDevice'
+                // const ModelClass = this.$FeathersVuex.api[modelClassName]
+                // // const gcEntry = ModelClass.getFromStore(configName)
+                // const { item: gcEntry } = useGet({
+                //     model: ModelClass,
+                //     id: configName
+                // })
+                // console.log('serialDevice get:', gcEntry.value.value)
+                // return gcEntry.value.value
+
+                // const configName = 'serialDevice'
+                // const modelClassName = 'GlobalConfig'
+                // const ModelClass = this.$FeathersVuex.api[modelClassName]
+                // const gcEntry = ModelClass.getFromStore(configName)
+                // console.log('serialDevice get', gcEntry)
+                // let resultValue = null
+                // if (gcEntry) {
+                //     resultValue = gcEntry.value
+                // }
+                const resultValue = null
+                return resultValue
             },
             set (val) {
                 // do something
-                console.log('serialDevice set', val)
-                this.serialDeviceInt = val
+                console.group('serialDevice set')
+                console.log('val', val)
+                // this.serialDeviceInt = val
                 // console.log('this.$store', this.$store)
                 // console.log('this.$FeathersVuex', this.$FeathersVuex)
                 // console.log('this.$store', this.$store)
-                const { GlobalConfig } = this.$FeathersVuex.api
-                console.log('GlobalConfig', GlobalConfig)
-                const { item: gconfig, isPending } = useGet({
-                    model: GlobalConfig,
-                    id: 'serialDevice'
+
+                const configName = 'serialDevice'
+                const modelClassName = 'GlobalConfig'
+                const ModelClass = this.$FeathersVuex.api[modelClassName]
+
+                const gcEntryNew = new ModelClass({
+                    id: configName,
+                    name: configName,
+                    value: val
                 })
-                console.log('gconfig', gconfig)
-                console.log('isPending', isPending)
-                // this.$store.commit('global-config/setSerialDevice', val)
+                gcEntryNew.save().then(() => {
+                    console.log('saveGC save: done.')
+                }).catch((error) => {
+                    console.error('saveGC save: ' + error.message, error)
+                })
+                console.groupEnd()
             }
         }
     },
@@ -129,6 +192,127 @@ export default {
                         icon: 'report_problem'
                     })
                 })
+        },
+        testDev: function (val) {
+            console.group('testDev')
+
+            const configName = 'serialDevice'
+            const modelClassName = 'GlobalConfig'
+            const ModelClass = this.$FeathersVuex.api[modelClassName]
+
+            console.log('this', this)
+            console.log('val', val)
+
+            console.log('useGet')
+            // const { item: gcEntry, isPending } = useGet({
+            const { item: gcEntry } = useGet({
+                model: ModelClass,
+                id: configName
+            })
+            console.log('gcEntry', gcEntry)
+            if (gcEntry.value) {
+                console.log('gcEntry.value', gcEntry.value)
+                console.log('gcEntry.value.value', gcEntry.value.value)
+                console.log('gcEntry.value.name', gcEntry.value.name)
+                console.log('gcEntry.value.id', gcEntry.value.id)
+            }
+
+            // ModelClass.get(configName).then((result) => {
+            //     console.log('result', result)
+            // }).catch((error) => {
+            //     console.error(error.message, error)
+            // })
+            // no record found
+
+            // const gcEntry = ModelClass.getFromStore(configName)
+            // console.log('gcEntry', gcEntry)
+            // console.log('gcEntry.value', gcEntry.value)
+
+            // console.log('new ModelClass')
+            // const gcEntryNew = new ModelClass({
+            //     id: configName,
+            //     name: configName,
+            //     value: this.serialDeviceInt,
+            //     description: 'testDev - ' + val + ' - new entry'
+            // })
+            // gcEntryNew.save().then(() => {
+            //     console.log('gcEntryNew save: done.')
+            // }).catch((error) => {
+            //     console.error('gcEntryNew save: ' + error.message, error)
+            // })
+            // console.log('gcEntryNew', gcEntryNew)
+            // console.log('gcEntryNew.value', gcEntryNew.value)
+
+            // gcEntry.value.patch({
+            //     value: 'HelloWorld Sun'
+            // }).then(() => {
+            //     console.log('patch done.')
+            // })
+            // gcEntry.value.save().then(() => {
+            //     console.log('save done.')
+            // })
+            // console.log('gcEntry.value.value', gcEntry.value.value)
+
+            // this.$store.dispatch(
+            //     'global-config/patch', [configName, {
+            //         name: configName,
+            //         value: 'HelloWorld'
+            //     }, {}]
+            // ).then(() => {
+            //     console.log('patch done.')
+            // }).catch((error) => {
+            //     console.error(error.message, error)
+            // })
+
+            console.groupEnd()
+        },
+        saveGC: function (configName, val) {
+            console.group('saveGC')
+
+            const modelClassName = 'GlobalConfig'
+            const ModelClass = this.$FeathersVuex.api[modelClassName]
+
+            console.log('this', this)
+            console.log('configName', configName)
+            console.log('val', val)
+
+            console.log('new ModelClass')
+            const gcEntryNew = new ModelClass({
+                id: configName,
+                name: configName,
+                value: val,
+                description: 'testDev - ' + val + ' - new entry'
+            })
+            gcEntryNew.save().then(() => {
+                console.log('saveGC save: done.')
+            }).catch((error) => {
+                console.error('saveGC save: ' + error.message, error)
+            })
+            console.log('gcEntryNew', gcEntryNew)
+            console.log('gcEntryNew.value', gcEntryNew.value)
+
+            // gcEntry.value.patch({
+            //     value: 'HelloWorld Sun'
+            // }).then(() => {
+            //     console.log('patch done.')
+            // })
+            // gcEntry.value.save().then(() => {
+            //     console.log('save done.')
+            // })
+            // console.log('gcEntry.value.value', gcEntry.value.value)
+
+            // this.$store.dispatch(
+            //     'global-config/patch', [configName, {
+            //         name: configName,
+            //         value: 'HelloWorld'
+            //     }, {}]
+            // ).then(() => {
+            //     console.log('patch done.')
+            // }).catch((error) => {
+            //     console.error(error.message, error)
+            // })
+
+            console.groupEnd()
         }
     },
     filters: {

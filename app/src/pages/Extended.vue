@@ -69,8 +69,6 @@
 
 <script>
 import { date } from 'quasar'
-// import { ref } from '@vue/composition-api'
-// import { computed } from '@vue/composition-api'
 import { makeFindMixin } from 'feathers-vuex'
 // import { useFind } from 'feathers-vuex'
 import { mapBind } from '../store/mapBind.js'
