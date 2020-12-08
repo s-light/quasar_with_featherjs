@@ -478,23 +478,28 @@ export default {
 
             // ------------------------------------------
             // get item
-            const { item: gcItem } = useGet({
+            const { item: resultUseGet } = useGet({
                 model: ModelClass,
                 id: configName
             })
+            let gcItem = resultUseGet.value
+            console.log('gcItem', gcItem)
 
             // ------------------------------------------
             // patch or create
             console.log('patch or create')
-            console.log('new ModelClass')
-            // const gcItem = new ModelClass({
-            //     // id: configName,
-            //     name: configName,
-            //     value: val
-            //     // description: 'testDev - ' + val + ' - new entry'
-            // })
+            if (!gcItem) {
+                console.log('new ModelClass')
+                gcItem = new ModelClass({
+                    id: configName,
+                    _id: configName,
+                    name: configName,
+                    value: val
+                    // description: 'testDev - ' + val + ' - new entry'
+                })
+            }
             // gcItem.save().then(() => {
-            gcItem.patch({ value: val }).then(() => {
+            gcItem.patch({ data: { value: val } }).then(() => {
                 console.log('gcSave patch: done.')
             }).catch((error) => {
                 if (error.name === 'NotFound') {

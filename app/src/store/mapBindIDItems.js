@@ -26,6 +26,8 @@ export const mapBindIDItems = function (servicePath, entryNames) {
         return modelClassName
     }
 
+    // ------------------------------------------
+    // global
     const result = {}
 
     // console.log('models.api', models.api)
@@ -35,10 +37,13 @@ export const mapBindIDItems = function (servicePath, entryNames) {
     const ModelClass = models.api[modelClassName]
     // console.log('ModelClass', ModelClass)
 
-    // global find
+    // ------------------------------------------
+    // servicePath setup
     const resultUseFind = useFind({
         model: ModelClass,
-        query: {}
+        params: {
+            query: {}
+        }
     })
     console.log('resultUseFind', resultUseFind)
     // let servicePathEntryList = []
@@ -52,6 +57,8 @@ export const mapBindIDItems = function (servicePath, entryNames) {
         }
     }
 
+    // ------------------------------------------
+    // entryNames setup
     console.log('entryNames', entryNames)
     for (var entryName of entryNames) {
         console.group('entryName: ' + entryName)
@@ -59,8 +66,12 @@ export const mapBindIDItems = function (servicePath, entryNames) {
         // get from server and store
         const resultUseGet = useGet({
             model: ModelClass,
-            id: entryName
+            id: entryName,
+            _id: entryName
         })
+        console.log('resultUseGet', resultUseGet)
+        console.log('resultUseGet.item', resultUseGet.item)
+        console.log('resultUseGet.item.value', resultUseGet.item.value)
         let gcItem = resultUseGet.item.value
         console.log('gcItem', gcItem)
         // check if item exists
@@ -69,10 +80,11 @@ export const mapBindIDItems = function (servicePath, entryNames) {
             console.log('create new item')
             gcItem = new ModelClass({
                 id: entryName,
+                _id: entryName,
                 value: null
             })
-            gcItem.create({
-                id: entryName
+            gcItem.create().catch((error) => {
+                console.error('mapBindIDItems: create - ' + error.message, error)
             })
         }
         const gcItemClone = gcItem.clone()

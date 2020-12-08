@@ -48,6 +48,11 @@ const linksData = [
         link: 'extended'
     },
     {
+        title: 'Dev',
+        icon: 'code',
+        link: 'dev'
+    },
+    {
         title: 'Settings',
         icon: 'settings',
         link: 'settings'

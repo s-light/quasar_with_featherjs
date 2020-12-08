@@ -36,6 +36,7 @@
                 filled
                 label="serial device"
                 v-model="serialDevice"
+                debounce="500"
             >
                 <template v-slot:append>
                     <q-icon
@@ -46,6 +47,23 @@
                     />
                 </template>
             </q-input>
+            pos:
+            <q-input
+                filled
+                type="number"
+                v-model.number="pos"
+                debounce="500"
+            />
+            <!-- <q-slider
+                v-model="pos"
+                :min="-20"
+                :max="20"
+                :step="2"
+                debounce="1000"
+                label
+                label-always
+                color="purple"
+             /> -->
         </section>
     </q-page>
 </template>
@@ -65,7 +83,7 @@ export default {
     },
     components: { DebugSection },
     computed: {
-        ...mapBindIDItems('global-config', ['serialDevice'])
+        ...mapBindIDItems('global-config', ['serialDevice', 'pos'])
     },
     methods: {
     },
