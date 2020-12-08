@@ -6,8 +6,9 @@ const hooks = require('./global-config.hooks');
 module.exports = function (app) {
     const options = {
         Model: createModel(app),
-        paginate: app.get('paginate'),
-        id: 'name'
+        // https://docs.feathersjs.com/api/databases/common.html#options
+        // id: 'name',
+        paginate: app.get('paginate')
     };
 
     // Initialize our service with any options it requires

@@ -15,9 +15,9 @@ class GlobalConfig extends BaseModel {
     // Define default properties here
     static instanceDefaults () {
         return {
-            name: 'Hello',
-            value: 42,
-            description: 'Summer!'
+            // name: 'Hello',
+            value: null
+            // description: 'Summer!'
         }
     }
 }
@@ -26,8 +26,9 @@ const servicePlugin = makeServicePlugin({
     Model: GlobalConfig,
     service: feathersClient.service(servicePath),
     servicePath,
-    idField: 'name',
-    tempIdField: '__name',
+    // https://vuex.feathersjs.com/service-plugin.html#configuration
+    // idField: 'name',
+    // tempIdField: '__name',
     debug: true
 })
 
