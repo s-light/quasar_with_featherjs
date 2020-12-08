@@ -56,6 +56,33 @@ export const mapBindIDItems = function (servicePath, entryNames) {
             }
         }
     }
+    // const servicePathName = decapitalizeFirstLetter(modelClassName)
+    // let gcList = []
+    // result[servicePathName] = {
+    //     get: function () {
+    //         return gcList
+    //     }
+    // }
+    // const params = {
+    //     query: {},
+    //     paginate: false
+    // }
+    // ModelClass.find(params).then((resultFind) => {
+    //     console.group('mapBindIDItems find.then')
+    //     console.log('resultFind', resultFind)
+    //     gcList = resultFind.data
+    //     console.log('gcList', gcList)
+    //     // if (gcList) {
+    //     //     result[servicePathName] = {
+    //     //         get: function () {
+    //     //             return gcList
+    //     //         }
+    //     //     }
+    //     // }
+    //     console.groupEnd()
+    // }).catch((error) => {
+    //     console.error(error.message, error)
+    // })
 
     // ------------------------------------------
     // entryNames setup

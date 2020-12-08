@@ -22,39 +22,38 @@
             <q-btn
                 v-ripple
                 label="testDev pos"
-                icon="sync"
                 @click="testDev('pos')"
             />
             <q-btn
                 v-ripple
                 label="testDev rot"
-                icon="sync"
                 @click="testDev('rot')"
+            />
+            <q-btn
+                v-ripple
+                label="gcFindAll"
+                @click="gcFindAll()"
             />
         </section>
         <section>
             <q-btn
                 v-ripple
                 label="gcFind pos"
-                icon="sync"
                 @click="gcFind('pos')"
             />
             <q-btn
                 v-ripple
                 label="gcFind rot"
-                icon="sync"
                 @click="gcFind('rot')"
             />
             <q-btn
                 v-ripple
                 label="gcGet pos"
-                icon="sync"
                 @click="gcGet('pos')"
             />
             <q-btn
                 v-ripple
                 label="gcGet rot"
-                icon="sync"
                 @click="gcGet('rot')"
             />
         </section>
@@ -62,25 +61,21 @@
             <q-btn
                 v-ripple
                 label="gcGetter pos"
-                icon="sync"
                 @click="gcGetter('pos')"
             />
             <q-btn
                 v-ripple
                 label="gcGetter rot"
-                icon="sync"
                 @click="gcGetter('rot')"
             />
             <q-btn
                 v-ripple
                 label="gcSetter pos 22"
-                icon="sync"
                 @click="gcSetter('pos', 22)"
             />
             <q-btn
                 v-ripple
                 label="gcSetter pos 77"
-                icon="sync"
                 @click="gcSetter('pos', 77)"
             />
         </section>
@@ -88,25 +83,21 @@
             <q-btn
                 v-ripple
                 label="gcUseFind pos"
-                icon="sync"
                 @click="gcUseFind('pos')"
             />
             <q-btn
                 v-ripple
                 label="gcUseFind rot"
-                icon="sync"
                 @click="gcUseFind('rot')"
             />
             <q-btn
                 v-ripple
                 label="gcUseGet pos"
-                icon="sync"
                 @click="gcUseGet('pos')"
             />
             <q-btn
                 v-ripple
                 label="gcUseGet rot"
-                icon="sync"
                 @click="gcUseGet('rot')"
             />
         </section>
@@ -114,25 +105,21 @@
             <q-btn
                 v-ripple
                 label="gcSave 'pos':'99'"
-                icon="sync"
                 @click="gcSave('pos', '99')"
             />
             <q-btn
                 v-ripple
                 label="gcSave 'pos':'10'"
-                icon="sync"
                 @click="gcSave('pos', '10')"
             />
             <q-btn
                 v-ripple
                 label="gcSave 'rot':'0°'"
-                icon="sync"
                 @click="gcSave('rot', '0°')"
             />
             <q-btn
                 v-ripple
                 label="gcSave 'rot':'75°'"
-                icon="sync"
                 @click="gcSave('rot', '75°')"
             />
         </section>
@@ -360,6 +347,33 @@ export default {
                     console.log('gcItem._id', gcItem._id)
                 }
             }
+            console.groupEnd()
+        },
+        gcFindAll: function () {
+            console.group('gcFindAll')
+            const modelClassName = 'GlobalConfig'
+            const ModelClass = this.$FeathersVuex.api[modelClassName]
+            const params = {
+                query: {},
+                paginate: false
+            }
+            ModelClass.find(params).then((resultFind) => {
+                console.group('gcFindAll.then')
+                console.log('resultFind', resultFind)
+                const gcList = resultFind.data
+                console.log('gcList', gcList)
+                if (gcList) {
+                    console.log('gcList[0]', gcList[0])
+                    const gcItem = gcList[0]
+                    if (gcItem) {
+                        console.log('gcItem.value', gcItem.value)
+                        console.log('gcItem._id', gcItem._id)
+                    }
+                }
+                console.groupEnd()
+            }).catch((error) => {
+                console.error(error.message, error)
+            })
             console.groupEnd()
         },
         gcFind: function (configName) {

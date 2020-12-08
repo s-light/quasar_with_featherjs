@@ -53,6 +53,16 @@ const linksData = [
         link: 'dev'
     },
     {
+        title: 'Dev2',
+        icon: 'code',
+        link: 'dev2'
+    },
+    {
+        title: 'Dev3',
+        icon: 'code',
+        link: 'dev3'
+    },
+    {
         title: 'Settings',
         icon: 'settings',
         link: 'settings'

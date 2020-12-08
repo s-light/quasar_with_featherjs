@@ -8,6 +8,8 @@ const routes = [
             { path: 'simple', component: () => import('pages/Simple.vue') },
             { path: 'extended', component: () => import('pages/Extended.vue') },
             { path: 'dev', component: () => import('pages/Dev.vue') },
+            { path: 'dev2', component: () => import('pages/Dev2.vue') },
+            { path: 'dev3', component: () => import('pages/Dev3.vue') },
             { path: 'settings', component: () => import('pages/Settings.vue') }
         ]
     },
