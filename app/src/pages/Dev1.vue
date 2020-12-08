@@ -9,12 +9,26 @@
                 @click="$q.dark.toggle()"
             />
         </section>
+        <debugSection label="globalConfig" :obj="globalConfig"/>
+        <debugSection label="serialDevice" :obj="serialDevice"/>
         <section>
             <q-btn
                 v-ripple
-                label="load db from server"
+                label="load from server"
                 icon="sync"
                 @click="globalConfigLoadFromServer()"
+            />
+            <q-btn
+                v-ripple
+                label="testDev pos"
+                icon="sync"
+                @click="testDev('pos')"
+            />
+            <q-btn
+                v-ripple
+                label="testDev rot"
+                icon="sync"
+                @click="testDev('rot')"
             />
         </section>
         <section>
@@ -33,26 +47,11 @@
                     />
                 </template>
             </q-input>
-
+            pos:
             <q-input
                 filled
-                label="pos"
                 type="number"
                 v-model.number="pos"
-                debounce="500"
-            />
-            <q-input
-                filled
-                label="button size (mm)"
-                type="number"
-                v-model.number="btnSize"
-                debounce="500"
-            />
-            <q-input
-                filled
-                label="button spaceing (mm)"
-                type="number"
-                v-model.number="btnSpace"
                 debounce="500"
             />
             <!-- <q-slider
@@ -71,7 +70,7 @@
 
 <script>
 import { mapBindIDItems } from '../store/mapBindIDItems.js'
-// import DebugSection from 'components/debugSection'
+import DebugSection from 'components/debugSection'
 
 export default {
     data () {
@@ -82,43 +81,11 @@ export default {
             // }
         }
     },
-    // components: { DebugSection },
+    components: { DebugSection },
     computed: {
-        ...mapBindIDItems('global-config', ['serialDevice', 'pos', 'btnSize', 'btnSpace'])
+        ...mapBindIDItems('global-config', ['serialDevice', 'pos'])
     },
     methods: {
-        globalConfigLoadFromServer: function () {
-            console.log('TODO: implement load from server')
-            this.$axios.get('/config/global-config.json')
-                .then((response) => {
-                    // this.data = response.data
-                    console.log('response.data', response.data)
-                    this.$q.notify({
-                        color: 'info',
-                        message: 'Loaded config from server. Processing now.',
-                        icon: 'info'
-                    })
-
-                    this.$q.notify({
-                        color: 'negative',
-                        message: 'TODO: Please Implement this!',
-                        icon: 'info'
-                    })
-
-                    this.$q.notify({
-                        color: 'positive',
-                        message: 'done.',
-                        icon: 'info'
-                    })
-                })
-                .catch(() => {
-                    this.$q.notify({
-                        color: 'negative',
-                        message: 'Loading failed',
-                        icon: 'report_problem'
-                    })
-                })
-        }
     },
     name: 'PageSettings'
 }

@@ -83,6 +83,7 @@ export const mapBindIDItems = function (servicePath, entryNames) {
     // }).catch((error) => {
     //     console.error(error.message, error)
     // })
+    // this seems to not work.. i think the references are broken..
 
     // ------------------------------------------
     // entryNames setup
