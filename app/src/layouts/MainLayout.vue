@@ -30,49 +30,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
-    {
-        title: 'Welcome',
-        icon: 'home',
-        link: '/'
-    },
-    {
-        title: 'Vanilla',
-        icon: 'aspect_ratio',
-        link: 'simple'
-    },
-    {
-        title: 'Vuex',
-        icon: 'code',
-        link: 'extended'
-    },
-    {
-        title: 'Dev0',
-        icon: 'code',
-        link: 'dev0'
-    },
-    {
-        title: 'Dev1',
-        icon: 'code',
-        link: 'dev1'
-    },
-    {
-        title: 'Dev2',
-        icon: 'code',
-        link: 'dev2'
-    },
-    {
-        title: 'Dev3',
-        icon: 'code',
-        link: 'dev3'
-    },
-    {
-        title: 'Settings',
-        icon: 'settings',
-        link: 'settings'
-    }
-]
+import { linksData } from '../router/routes'
 
 export default {
     name: 'MainLayout',

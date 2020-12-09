@@ -5,9 +5,9 @@
         <section>
             isFindPending : '{{ areGCLoading }}'<br>
             <q-btn
-                v-ripple
-                label="gcFindAll"
-                @click="gcFindAll()"
+            v-ripple
+            label="gcFindAll"
+            @click="gcFindAll()"
             />
         </section>
     </q-page>
@@ -20,6 +20,7 @@ import {
     mapGetters,
     mapActions
 } from 'vuex'
+import { findList } from '../store/mapBindIDItems.js'
 
 export default {
     data () {
@@ -39,28 +40,18 @@ export default {
     },
     methods: {
         gcFindAll: function () {
-            console.group('gcFindAll')
-            const modelClassName = 'GlobalConfig'
-            const ModelClass = this.$FeathersVuex.api[modelClassName]
-            const params = {
-                query: {},
-                paginate: false
-            }
-            ModelClass.find(params).then((resultFind) => {
-                console.group('gcFindAll.then')
-                console.log('resultFind', resultFind)
-                const gcList = resultFind.data
-                console.log('gcList', gcList)
-                if (gcList) {
-                    this.devObject = gcList
-                }
-                console.groupEnd()
-            }).catch((error) => {
-                console.error(error.message, error)
-            })
-            console.groupEnd()
+            this.devObject = findList('global-config')
         },
         ...mapActions('global-config', { findGC: 'find' })
+    },
+    created () {
+        // this.findGc({ query: {} })
+        //     .then(response => {
+        //         // In the find action, the 'todos' array is not a reactive list, but the individual records are.
+        //         // eslint-disable-next-line no-unused-vars
+        //         const gcList = response.data || response
+        //     })
+        this.devObject = findList('global-config')
     },
     name: 'PageDev3'
 }

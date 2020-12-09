@@ -1,6 +1,9 @@
 <template>
     <q-page class="fit column no-wrap justify-center items-center content-center">
         <h1>Global Settings</h1>
+        <debugSection label="globalConfig" :obj="globalConfig"/>
+        <debugSection label="serialDevice" :obj="serialDevice"/>
+        <debugSection label="btnSpace" :obj="btnSpace"/>
         <section>
             <q-btn
                 round
@@ -71,7 +74,7 @@
 
 <script>
 import { mapBindIDItems } from '../store/mapBindIDItems.js'
-// import DebugSection from 'components/debugSection'
+import DebugSection from 'components/debugSection'
 
 export default {
     data () {
@@ -82,7 +85,7 @@ export default {
             // }
         }
     },
-    // components: { DebugSection },
+    components: { DebugSection },
     computed: {
         ...mapBindIDItems('global-config', ['serialDevice', 'pos', 'btnSize', 'btnSpace'])
     },
@@ -119,6 +122,9 @@ export default {
                     })
                 })
         }
+    },
+    created: function () {
+        // return mapBindIDItems('global-config', ['serialDevice', 'pos', 'btnSize', 'btnSpace'])
     },
     name: 'PageSettings'
 }
