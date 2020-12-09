@@ -36,6 +36,7 @@ function servicePath2modelClassName (servicePath) {
 }
 
 export const findList = async function (servicePath) {
+    console.group('findList')
     const modelClassName = servicePath2modelClassName(servicePath)
     const ModelClass = models.api[modelClassName]
     const params = {
@@ -43,7 +44,22 @@ export const findList = async function (servicePath) {
         paginate: false
     }
     const resultFind = await ModelClass.find(params)
+    console.log('resultFind', resultFind)
     const gcList = resultFind.data
+    console.log('gcList', gcList)
+    // ModelClass.find(params).then((resultFind) => {
+    //     console.group('findList.then')
+    //     console.log('resultFind', resultFind)
+    //     const gcList = resultFind.data
+    //     console.log('gcList', gcList)
+    //     if (gcList) {
+    //         return gcList
+    //     }
+    //     console.groupEnd()
+    // }).catch((error) => {
+    //     console.error(error.message, error)
+    // })
+    console.groupEnd()
     return gcList
 }
 
@@ -67,13 +83,17 @@ export const mapBindIDItems = function (servicePath, entryNames) {
     // ------------------------------------------
     // prepare empty base
     const reactiveBase = {}
+    // reactiveBase.gcList = []
     Vue.set(reactiveBase, 'gcList', {})
+    // Vue.set(reactiveBase, 'gcList', [])
+    console.log('reactiveBase', reactiveBase)
     resultServicePath[servicePathName] = {
         get: function () {
             return reactiveBase.gcList
         }
     }
 
+    console.log('entryNames', entryNames)
     for (const entryName of entryNames) {
         resultEntries[entryName] = {
             get: function () {
@@ -86,31 +106,92 @@ export const mapBindIDItems = function (servicePath, entryNames) {
 
     // ------------------------------------------
     // servicePath setup
+    // const resultUseFind = useFind({
+    //     model: ModelClass,
+    //     params: {
+    //         query: {}
+    //     }
+    // })
+    // console.log('resultUseFind', resultUseFind)
+    // console.log('resultUseFind.items', resultUseFind.items)
+    // console.log('resultUseFind.itmes.value', resultUseFind.items.value)
+    // // let servicePathEntryList = []
+    // if (resultUseFind.items.value) {
+    //     // servicePathEntryList = resultUseFind.items.value
+    //     resultEntries[decapitalizeFirstLetter(modelClassName)] = {
+    //         get: function () {
+    //             // return servicePathEntryList
+    //             return resultUseFind.items.value
+    //         }
+    //     }
+    // }
+    // Vue.set(obj,...)
     const params = {
         query: {},
         paginate: false
     }
+    // try {
+    //     const resultFind = await ModelClass.find(params)
+    //     console.group('mapBindIDItems find.then')
+    //     console.log('resultFind', resultFind)
+    //     reactiveBase.gcList = resultFind.data
+    //     console.log('reactiveBase.gcList', reactiveBase.gcList)
+    //     if (reactiveBase.gcList) {
+    //         result[servicePathName].get = function () {
+    //             return reactiveBase.gcList
+    //         }
+    //     }
+    //     console.groupEnd()
+    // } catch (e) {
+    //     console.error(e.message, e)
+    // } finally {
+    //
+    // }
     ModelClass.find(params).then((resultFind) => {
+        console.group('mapBindIDItems find.then')
+        console.log('resultFind', resultFind)
+        // reactiveBase.gcList = resultFind.data
+        // // https://vuejs.org/v2/guide/reactivity.html#For-Arrays
+        // reactiveBase.gcList = resultFind.data
+        // Vue.set(reactiveBase, 'gcList', resultFind.data)
+        // // clear existing array
+        // reactiveBase.gcList.splice(0)
+        // // fill existing array
         for (const item of resultFind.data) {
             reactiveBase.gcList[item.id] = item
         }
+        console.log('reactiveBase.gcList', reactiveBase.gcList)
+        // if (reactiveBase.gcList) {
+        //     result[servicePathName].get = function () {
+        //         return reactiveBase.gcList
+        //     }
+        // }
+        console.groupEnd()
     }).catch((error) => {
         console.error(error.message, error)
     })
+    // this seems to not work.. i think the references are broken..
 
     // ------------------------------------------
     // entryNames setup
     for (const entryName of entryNames) {
+        console.group('entryName: ' + entryName)
+        // console.log('ModelClass', ModelClass)
         // get from server and store
         const resultUseGet = useGet({
             model: ModelClass,
             id: entryName,
             _id: entryName
         })
+        console.log('resultUseGet', resultUseGet)
+        console.log('resultUseGet.item', resultUseGet.item)
+        console.log('resultUseGet.item.value', resultUseGet.item.value)
         let gcItem = resultUseGet.item.value
+        console.log('gcItem', gcItem)
         // check if item exists
         if (!gcItem) {
             // create new item
+            console.log('create new item')
             gcItem = new ModelClass({
                 id: entryName,
                 _id: entryName,
@@ -121,6 +202,8 @@ export const mapBindIDItems = function (servicePath, entryNames) {
             })
         }
         const gcItemClone = gcItem.clone()
+        console.log(entryName + ' gcItem', gcItem)
+        console.log(entryName + ' gcItemClone', gcItemClone)
         resultEntries[entryName].get = function () {
             return gcItemClone.value
         }
@@ -129,7 +212,10 @@ export const mapBindIDItems = function (servicePath, entryNames) {
             gcItemClone.commit()
             gcItem.patch({ data: { value: val } })
         }
+        console.groupEnd()
     }
     const result = Object.assign({}, resultServicePath, resultEntries)
+    console.log('result', result)
     return result
+// )
 }
