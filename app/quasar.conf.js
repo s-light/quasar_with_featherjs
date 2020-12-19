@@ -85,8 +85,9 @@ module.exports = function (/* ctx */) {
             // https://webpack.js.org/configuration/dev-server/#devserverproxy
             proxy: {
                 '/api': {
-                    target: 'https://localhost:3030',
-                    pathRewrite: { '^/api': '' },
+                    target: 'http://localhost:3030',
+                    // target: 'http://[::1]:3030',
+                    // pathRewrite: { '^/api': '' },
                     secure: false,
                     changeOrigin: true
                 }

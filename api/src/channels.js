@@ -1,11 +1,11 @@
 module.exports = function(app) {
     if(typeof app.channel !== 'function') {
-    // If no real-time functionality has been configured just return
+        // If no real-time functionality has been configured just return
         return;
     }
 
     app.on('connection', connection => {
-    // On a new real-time connection, add it to the anonymous channel
+        // On a new real-time connection, add it to the anonymous channel
         // console.log('incoming connection');
         app.channel('anonymous').join(connection);
         console.log('incoming connection joined \'anonymous\'');
